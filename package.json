@@ -1,0 +1,11 @@
+{
+  "name": "sensor",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@google-cloud/pubsub": "^1.7.2",
+    "@google-cloud/storage": "^4.7.0",
+    "pluck-deep": "^3.0.0"
+  }
+}
