@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ftptd-service
+spec:
+  selector:
+    app: ftptd
+  ports:
+    - protocol: TCP
+      port: 20
+      targetPort: 20
+      name: active0
+    - protocol: TCP
+      port: 21
+      targetPort: 21
+      name: active
+    - protocol: TCP
+      port: 17101
+      targetPort: 17101
+      name: pasv1
+    - protocol: TCP
+      port: 17102
+      targetPort: 17102
+      name: pasv2

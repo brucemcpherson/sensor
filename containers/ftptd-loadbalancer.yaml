@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ftptd-loadbalancer
+spec:
+  selector:
+    app: ftpd-service
+  ports:
+    - port: 20
+      targetPort: 20
+      name: active0
+    - port: 21
+      targetPort: 21
+      name: active
+    - port: 17101
+      targetPort: 17101
+      name: pasv1
+    - port: 17102
+      targetPort: 17102
+      name: pasv2
+  type: LoadBalancer

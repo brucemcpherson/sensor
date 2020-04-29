@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ftptd
+  namespace: default
+
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: ftptd
+  template:
+    metadata:
+      labels:
+        app: ftptd
+    spec:
+      containers:
+      - image: gcr.io/fid-sql/ftp:td
+        imagePullPolicy: Always
+        name: ftptd
+        resources: {}
+        ports:
+        - containerPort: 20
+          protocol: TCP
+        - containerPort: 21
+          protocol: TCP
+        - containerPort: 17101
+          protocol: TCP
+        - containerPort: 17102
+          protocol: TCP
+        env:
+        - name: URL
+          value: "ftp://34.90.230.48:21"
+        - name: PASVURL
+          value: "ftp://34.90.230.48"
+        - name: PASVMIN
+          value: "17101"
+        - name: PASVMAX
+          value: "17102"
+
+      

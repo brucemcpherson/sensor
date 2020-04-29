@@ -1,123 +1,130 @@
 // all this stuff needs to move to secrets handling finally
-const settings = {
-
-  tp: {
-    runmode: 'tp',
-    pubsub: {
-      use: true,
-      includeData: true,
-      dataArrived: 'sensor-data-nl-tp',
-      dataReady: 'sensor-data-nl-tp',
-      pusher: false,
-      idleTime: 60000,
-      gcp: {
-        info: {
-          serviceAccountFile: './private/sensorgcpupload.json'
-        },
-        get creds () {
-          return {
-            credentials: require(this.info.serviceAccountFile)
-          }
-        }
-      }
-    },
-    ftp: {
-      tmp: '/tmp/',
-      users: require('./private/users.json').tp,
-      get  logging () {
-        return {name: 'tp', level: 'warn'}
+// minimize the whitelist to ftp commands required just to do an upload
+const whitelist = [
+  'STOR',
+  'PASS',
+  'PASV',
+  'USER',
+  'TYPE'
+]
+const td =   {
+  pubsub: {
+    use: true,
+    includeData: true,
+    forcePush: false,
+    dataArrived: 'sensor-data-nl-td',
+    dataReady: 'sensor-data-nl-td',
+    pusher: false,
+    idleTime: 60000,
+    gcp: {
+      info: {
+        serviceAccountFile: './private/sensorgcpupload.json'
       },
-      gcp: {
-        use: true,
-        info: {
-          serviceAccountFile: './private/sensorgcpupload.json',
-          bucketName: 'sensor-data-nl',
-          folderName: 'ftp'
-        },
-        get creds () {
-          return {
-            credentials: require(this.info.serviceAccountFile),
-            bucketName: this.info.bucketName,
-            folderName: this.info.folderName
-          }
-        }
-      },
-      get instance () {  
+      get creds () {
         return {
-          anonymous: false, 
-          url: 'ftp://127.0.0.1:30021',
-          pasv_url: 'ftp://127.0.0.1',
-          pasv_min: 19001,
-          pasv_max: 19999,
-          greeting: 'prod runmode',
-          whitelist: []
+          credentials: require(this.info.serviceAccountFile)
         }
       }
     }
   },
-
-  td: {
-    runmode: 'td',
-    pubsub: {
+  ftp: {
+    tmp: '/tmp/',
+    users: require('./private/users.json').td,
+    // change level to trace for all messages
+    // useful when digging into what needs to be whitelisted
+    logging: {name: 'td', level: 'info'},
+    gcp: {
       use: true,
-      includeData: true,
-      forcePush: false,
-      dataArrived: 'sensor-data-nl-td',
-      dataReady: 'sensor-data-nl-td',
-      pusher: false,
-      idleTime: 60000,
-      gcp: {
-        info: {
-          serviceAccountFile: './private/sensorgcpupload.json'
-        },
-        get creds () {
-          return {
-            credentials: require(this.info.serviceAccountFile)
-          }
+      info: {
+        serviceAccountFile: './private/sensorgcpupload.json',
+        bucketName: 'sensor-data-nl',
+        folderName: 'ftp-dev'
+      },
+      get creds () {
+        return {
+          credentials: require(this.info.serviceAccountFile),
+          bucketName: this.info.bucketName,
+          folderName: this.info.folderName
         }
       }
     },
-    ftp: {
-      tmp: '/tmp/',
-      users: require('./private/users.json').td,
-      get  logging () {
-        return {name: 'td', level: 'info'}
-      },
-      gcp: {
-        use: true,
-        info: {
-          serviceAccountFile: './private/sensorgcpupload.json',
-          bucketName: 'sensor-data-nl',
-          folderName: 'ftp-dev'
-        },
-        get creds () {
-          return {
-            credentials: require(this.info.serviceAccountFile),
-            bucketName: this.info.bucketName,
-            folderName: this.info.folderName
-          }
-        }
-      },
-      get instance () {
-        return {
-          anonymous: false, 
-          url: 'ftp://127.0.0.1:30021',
-          pasv_url: 'ftp://127.0.0.1',
-          pasv_min: 8881,
-          pasv_max: 9999,
-          greeting: 'prod runmode',
-          whitelist: [],
-          greeting: 'dev runmode',
-          blacklist: ['MDTM']
-        }
-      }
+    instance: {  
+      anonymous: false, 
+      url: 'ftp://127.0.0.1:170021',
+      pasv_url: 'ftp://127.0.0.1',
+      pasv_min: 18001,
+      pasv_max: 18999,
+      greeting: 'dev runmode',
+      whitelist
     }
-  },
-
-  ftp (runmode) {
-    return  this[m].ftp
   }
+}
+const tp = {
 
+  pubsub: {
+    use: true,
+    includeData: true,
+    dataArrived: 'sensor-data-nl-tp',
+    dataReady: 'sensor-data-nl-tp',
+    pusher: false,
+    idleTime: 60000,
+    gcp: {
+      info: {
+        serviceAccountFile: './private/sensorgcpupload.json'
+      },
+      get creds () {
+        return {
+          credentials: require(this.info.serviceAccountFile)
+        }
+      }
+    }
+  },
+  ftp: {
+    tmp: '/tmp/',
+    users: require('./private/users.json').tp,
+    logging: {name: 'tp', level: 'warn'},
+    gcp: {
+      use: true,
+      info: {
+        serviceAccountFile: './private/sensorgcpupload.json',
+        bucketName: 'sensor-data-nl',
+        folderName: 'ftp'
+      },
+      get creds () {
+        return {
+          credentials: require(this.info.serviceAccountFile),
+          bucketName: this.info.bucketName,
+          folderName: this.info.folderName
+        }
+      }
+    },
+    instance: {  
+      anonymous: false, 
+      url: 'ftp://127.0.0.1:40021',
+      pasv_url: 'ftp://127.0.0.1',
+      pasv_min: 19001,
+      pasv_max: 19999,
+      greeting: 'prod runmode',
+      whitelist
+    }
+  }
+}
+const tl = {
+  ...td,
+  ftp: {
+    ...td.ftp,
+    instance: {
+      ...td.ftp.instance,
+      url: 'ftp://127.0.0.1:30021',
+      pasv_url: 'ftp://127.0.0.1',
+      greeting: 'local runmode'
+    }
+  }
+}
+const settings = {
+  tp,
+  td,
+  tl
 }
 
 module.exports = {

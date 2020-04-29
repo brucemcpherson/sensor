@@ -16,7 +16,6 @@ class GcpFileSystem extends FileSystem {
     // these wil get fired when storage is uploaded to 
     this.onStorageError = options.onStorageError
     this.onStorageFinished = options.onStorageFinished
-    console.log (this.onStorageFinished)
   }
 
   /**

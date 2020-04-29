@@ -1,0 +1,2 @@
+gcloud beta container --project "fid-sql" clusters create "sensor" --zone "europe-west4-b" --username "admin"  --machine-type "g1-small" --image-type "COS" --disk-type "pd-standard" --disk-size "100"  --preemptible --num-nodes "2" --enable-autoscaling --min-nodes "2" --max-nodes "4" --enable-autoupgrade --enable-autorepair
+echo 'set up a premptible cluster "sensor"'
