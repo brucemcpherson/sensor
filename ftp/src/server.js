@@ -24,10 +24,6 @@ const server = {
       onStorageError ({connection, error, fileName, settings}) {
         // handle a failure uploading
         console.error('failed on upload ', error, fileName)
-        // TODO - passive runs out of ports
-        // in a container, the port is not being released - how to fix ?
-        // maybe we can do something with the connection
-        // console.log(connection)
       
       },
       onStorageFinished ({connection, storageName, settings, fileName, data}) {
@@ -46,11 +42,7 @@ const server = {
           })
         }
         console.log(`${now}:upload completion detected ${fileName} uploaded to ${storageName}`)
-        // TODO - passive runs out of ports
-        // in a container, the port is not being released - how to fix ?
-        // maybe we can do something with the connection
-        // see...
-        // https://github.com/trs/ftp-srv/issues/197
+
       }
     })
       

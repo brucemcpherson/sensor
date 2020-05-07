@@ -7,9 +7,4 @@ COPY ./common ./common
 COPY ./ftp ./ftp
 RUN yarn  --production=true
 RUN cd ftp && yarn  --production=true
-# these are the connectable ports
-# connection port - override the settings with these env variables
-## all the env variables will be set by the contents of the deployment yaml file
-## but i think we still need this here - so just expose the entire range
-EXPOSE 18021-18022 18101-18102 18201-18202
 CMD [ "node", "ftp/index.js" ]

@@ -1,3 +1,5 @@
 **/node_modules
 **/private
 **/*.log
+**/containers
+*.dat
