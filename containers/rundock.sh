@@ -1,0 +1,1 @@
+docker run --env-file env.list -p 18021-18022:18021-18022 -p 18101-18104:18101-18104  gcr.io/fid-sql/ftp:td

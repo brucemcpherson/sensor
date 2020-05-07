@@ -12,19 +12,25 @@ const server = {
     this.settings = settings
 		const options = this.settings.ftp
 		
-		this.instance = new FtpSrv({ 
+		const instance = new FtpSrv({ 
 			...options.instance,
 			log: options.logging ? bunyan.createLogger(options.logging) : null
-		})
+    })
+    this.instance = instance
     console.log(`listening for ftp on ${options.instance.url} (active) ${options.instance.pasv_url} (passive)`)
     
     // cusotm event handlers 
 		this.handlers({
-      onStorageError ({error, fileName, settings}) {
+      onStorageError ({connection, error, fileName, settings}) {
         // handle a failure uploading
         console.error('failed on upload ', error, fileName)
+        // TODO - passive runs out of ports
+        // in a container, the port is not being released - how to fix ?
+        // maybe we can do something with the connection
+        // console.log(connection)
+      
       },
-      onStorageFinished ({storageName, settings, fileName, data}) {
+      onStorageFinished ({connection, storageName, settings, fileName, data}) {
         // if we're pubsubbing, now is the time
         const now = new Date().getTime()
         if (settings.pubsub.use) {
@@ -40,6 +46,11 @@ const server = {
           })
         }
         console.log(`${now}:upload completion detected ${fileName} uploaded to ${storageName}`)
+        // TODO - passive runs out of ports
+        // in a container, the port is not being released - how to fix ?
+        // maybe we can do something with the connection
+        // see...
+        // https://github.com/trs/ftp-srv/issues/197
       }
     })
       

@@ -5,9 +5,11 @@ const { settings:sa } = require ('../common/secrets')
 // dev, prod etc..
 const {env} = process
 const runmode = env.RUNMODE || 'tl'
+
 const defaultSettings = sa[runmode]
 const defaultFtp = defaultSettings.ftp
 const defaultInstance = defaultFtp.instance
+
 
 // pick up any env modifiable settings and replace defaults
 const settings = {

@@ -11,6 +11,5 @@ RUN cd ftp && yarn  --production=true
 # connection port - override the settings with these env variables
 ## all the env variables will be set by the contents of the deployment yaml file
 ## but i think we still need this here - so just expose the entire range
-EXPOSE 17001-17999
-EXPOSE 20-21
+EXPOSE 18021-18022 18101-18102 18201-18202
 CMD [ "node", "ftp/index.js" ]

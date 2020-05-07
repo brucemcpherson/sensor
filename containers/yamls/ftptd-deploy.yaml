@@ -22,22 +22,28 @@ spec:
         name: ftptd
         resources: {}
         ports:
-        - containerPort: 20
+        - containerPort: 18021
           protocol: TCP
-        - containerPort: 21
+        - containerPort: 18022
           protocol: TCP
-        - containerPort: 17101
+        - containerPort: 18101
           protocol: TCP
-        - containerPort: 17102
+        - containerPort: 18102
           protocol: TCP
+        - containerPort: 18103
+          protocol: TCP
+        - containerPort: 18104
+          protocol: TCP         
         env:
         - name: URL
-          value: "ftp://34.90.230.48:21"
+          value: "ftp://0.0.0.0:18021"
         - name: PASVURL
-          value: "ftp://34.90.230.48"
+          value: "ftp://34.91.126.43"
         - name: PASVMIN
-          value: "17101"
+          value: "18101"
         - name: PASVMAX
-          value: "17102"
+          value: "18104"
+        - name: RUNMODE
+          value: "td"
 
       

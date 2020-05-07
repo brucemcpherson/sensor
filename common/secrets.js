@@ -5,7 +5,10 @@ const whitelist = [
   'PASS',
   'PASV',
   'USER',
-  'TYPE'
+  'TYPE',
+  'QUIT',
+  'ABOR',
+  'FEAT'
 ]
 const td =   {
   pubsub: {
@@ -32,7 +35,7 @@ const td =   {
     users: require('./private/users.json').td,
     // change level to trace for all messages
     // useful when digging into what needs to be whitelisted
-    logging: {name: 'td', level: 'info'},
+    logging: {name: 'td', level: 'warn'},
     gcp: {
       use: true,
       info: {
@@ -52,8 +55,8 @@ const td =   {
       anonymous: false, 
       url: 'ftp://127.0.0.1:170021',
       pasv_url: 'ftp://127.0.0.1',
-      pasv_min: 18001,
-      pasv_max: 18999,
+      pasv_min: 18101,
+      pasv_max: 18104,
       greeting: 'dev runmode',
       whitelist
     }
@@ -113,9 +116,10 @@ const tl = {
   ...td,
   ftp: {
     ...td.ftp,
+    logging: {name: 'tl', level: 'info'},
     instance: {
       ...td.ftp.instance,
-      url: 'ftp://127.0.0.1:30021',
+      url: 'ftp://127.0.0.1:18021',
       pasv_url: 'ftp://127.0.0.1',
       greeting: 'local runmode'
     }

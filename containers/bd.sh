@@ -8,12 +8,6 @@ NODE_ENV=production
 P="fid-sql"
 Z="europe-west4-b"
 C="sensor"
-
-gcloud config set project $P
-gcloud container clusters get-credentials $C --zone $Z
-kubectl config get-contexts
-echo "check that nodes are for the right project $P on $Z"
-kubectl get nodes
 echo "starting build $D"
 docker build -f containers/$D.dockerfile . --tag gcr.io/$P/$D:$R
 docker push gcr.io/$P/$D

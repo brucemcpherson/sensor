@@ -5,7 +5,7 @@ const Storage = require('@google-cloud/storage').Storage;
 const through = require('through')
 const path = require('path')
 
-const {createReadStream, createWriteStream, constants} = require('fs');
+const {createWriteStream} = require('fs');
 
 class GcpFileSystem extends FileSystem {
   
@@ -13,6 +13,8 @@ class GcpFileSystem extends FileSystem {
     super(...arguments);
     const [connection, options] = [...arguments] 
     this.settings = options.settings
+    this.connection = connection
+
     // these wil get fired when storage is uploaded to 
     this.onStorageError = options.onStorageError
     this.onStorageFinished = options.onStorageFinished
@@ -84,7 +86,7 @@ class GcpFileSystem extends FileSystem {
     // then delete the file
     // because of this https://github.com/trs/ftp-srv/issues/199
 
-    const {settings, onStorageError, onStorageFinished} = this
+    const {settings, onStorageError, onStorageFinished, connection} = this
     const {pubsub, ftp} = settings
     // get a unique name for the file and add the extension
     const fsPath = ftp.tmp + this.getUniqueName() + path.extname(fileName)
@@ -107,7 +109,7 @@ class GcpFileSystem extends FileSystem {
       removeTemp(fsPath)
       console.error('stream failure', error)
       if(onStorageError) {
-        onStorageError({error, fileName, settings})
+        onStorageError({connection, error, fileName, settings})
       } 
     }
     
@@ -153,7 +155,7 @@ class GcpFileSystem extends FileSystem {
         stream.end()
         // call the thing to do when its over
         if(onStorageFinished) {
-          onStorageFinished({storageName, settings, fileName, data: Buffer.concat(streamedData)})
+          onStorageFinished({connection, storageName, settings, fileName, data: Buffer.concat(streamedData)})
         } 
         // delete the temp file
         removeTemp(fsPath)
