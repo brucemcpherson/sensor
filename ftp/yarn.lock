@@ -114,10 +114,10 @@ find-up@^2.1.0:
   dependencies:
     locate-path "^2.0.0"
 
-ftp-srv@^4.3.1:
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/ftp-srv/-/ftp-srv-4.3.1.tgz#e791decb7087efdeca012f3869bcf6b5efbf44ac"
-  integrity sha512-XzvRSoHnZSgijy3P3m+AEkRT3ONY9PLdwMwKeOznQb9w+Yklf5DcjGFamokAsROgPQBLSctC6JqSOY5IrrYzRQ==
+ftp-srv@^4.3.4:
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/ftp-srv/-/ftp-srv-4.3.4.tgz#05bf76fd82e0ce781624d23d46f80746c95fe06e"
+  integrity sha512-q4tPM4n22fgRi0Q4XUDXH3Bqg5+H2xPmBaz5PyipTfAAFLGepY/XIahf4+Vy047LwcjtNerAU9dFjl+fAEbYzA==
   dependencies:
     bluebird "^3.5.1"
     bunyan "^1.8.12"

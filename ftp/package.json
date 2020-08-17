@@ -5,7 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "bunyan": "^1.8.12",
-    "ftp-srv": "^4.3.1",
+    "ftp-srv": "^4.3.4",
     "mime-types": "^2.1.26",
     "through": "^2.3.8"
   }
